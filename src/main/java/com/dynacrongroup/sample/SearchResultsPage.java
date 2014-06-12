@@ -10,8 +10,8 @@ import java.util.List;
 public class SearchResultsPage extends PageObject {
 
     private By BY_RESULTS_WRAPPER = By.id("ires");
-    private By BY_RESULT = By.className("rc");
-    private By BY_RESULT_TEST = By.className("r");
+    private By BY_RESULT = By.className("s");
+    private By BY_RESULT_TEST = By.className("_Zd");
     private static final int MAX_WAIT_TIMEOUT_SEC = 5;
 
     public SearchResultsPage(WebDriver driver) {

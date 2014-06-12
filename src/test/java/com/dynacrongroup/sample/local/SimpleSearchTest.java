@@ -11,32 +11,46 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 import static org.fest.assertions.api.Assertions.assertThat;
 
 
 @Test
 @Listeners({SeleniumWebDriver.class})
-
 public class SimpleSearchTest {
     private final static Logger log = LoggerFactory.getLogger(SimpleSearchTest.class);
 
     private String SEARCH_TERM = "Selenium Page Objects";
-    private String SEARCH_RESULTS_EXPECTED = "PageObjects - selenium - The Page Object pattern represents the ...";
+    private String SEARCH_RESULTS_EXPECTED = "code.google.com/p/selenium/wiki/PageObjects";
+    private List<String> SEARCH_RESULTS_FOUND;
 
-    @MethodDriver
+    // By specifying an excluded method the methodDriver variable will NOT be initialized for the listed methods.
+    // This can be tested in the excluded method by the following assert: assertThat(methodDriver).isNull();
+    @MethodDriver(excludeMethods = {"testNoWebDriverAssert"})
     public WebDriver methodDriver;
 
     public String search = "https://www.google.com/";
 
-
+    // This test uses the WebDriver to search google for "Selenium Page Objects"
+    // It then verifies the PageObject returned a non-null list of objects
     public void testSimpleSearch() {
         methodDriver.get(search);
         SearchPage searchPage = new SearchPage(methodDriver);
         SearchResultsPage searchResultsPage = searchPage.submitSearch(SEARCH_TERM);
 
-        log.info("Results displayed: " +searchResultsPage.getResultsContainerWebElementList().size());
-        assertThat(searchResultsPage.getSearchResults()).contains(SEARCH_RESULTS_EXPECTED);
+        SEARCH_RESULTS_FOUND = searchResultsPage.getSearchResults();
 
+        assertThat(SEARCH_RESULTS_FOUND).isNotNull();
+        log.info("Results displayed: " + SEARCH_RESULTS_FOUND.size());
+        assertThat(SEARCH_RESULTS_FOUND.size()).isGreaterThan(0);
     }
 
+    // This test is to display the ability disable the WebDriver for a test method.
+    // It will only run if the testSimpleSearch test found results
+    @Test(dependsOnMethods = {"testSimpleSearch"})
+    public void testNoWebDriverAssert() {
+        assertThat(methodDriver).isNull();
+        assertThat(SEARCH_RESULTS_FOUND).contains(SEARCH_RESULTS_EXPECTED);
+    }
 }
