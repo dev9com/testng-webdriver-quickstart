@@ -46,8 +46,8 @@ public class SimpleSearchTest {
         assertThat(SEARCH_RESULTS_FOUND.size()).isGreaterThan(0);
     }
 
-    // This test is to display the ability disable the WebDriver for a test method.
-    // It will only run if the testSimpleSearch test found results
+    // This test is to display the ability to disable the WebDriver for a test method.
+    // It will only run if the testSimpleSearch test method found results
     @Test(dependsOnMethods = {"testSimpleSearch"})
     public void testNoWebDriverAssert() {
         assertThat(methodDriver).isNull();
