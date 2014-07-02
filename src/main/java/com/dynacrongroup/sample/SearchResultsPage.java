@@ -10,8 +10,7 @@ import java.util.List;
 public class SearchResultsPage extends PageObject {
 
     private By BY_RESULTS_WRAPPER = By.id("ires");
-    private By BY_RESULT = By.className("s");
-    private By BY_RESULT_TEST = By.className("_Zd");
+    private By BY_CITE = By.tagName("cite");
     private static final int MAX_WAIT_TIMEOUT_SEC = 5;
 
     public SearchResultsPage(WebDriver driver) {
@@ -19,9 +18,9 @@ public class SearchResultsPage extends PageObject {
     }
 
 
-    public List<WebElement> getResultsContainerWebElementList() {
+    public List<WebElement> getCites() {
         waitUntilResultsLoaded();
-        return driver.findElement(BY_RESULTS_WRAPPER).findElements(BY_RESULT);
+        return driver.findElement(BY_RESULTS_WRAPPER).findElements(BY_CITE);
     }
 
     public void waitUntilResultsLoaded() {
@@ -30,14 +29,14 @@ public class SearchResultsPage extends PageObject {
 
     public List<String> getSearchResults() {
         this.waitUntilResultsLoaded();
-        List<WebElement> searchResults = this.getResultsContainerWebElementList();
+        List<WebElement> cites = this.getCites();
 
-        List<String> propertyList = new ArrayList<>();
-        for (WebElement parent : searchResults) {
-            propertyList.add(parent.findElement(BY_RESULT_TEST).getText());
+        List<String> citesList = new ArrayList<>();
+        for (WebElement cite : cites) {
+            citesList.add(cite.getText());
         }
 
-        return propertyList;
+        return citesList;
     }
 
 

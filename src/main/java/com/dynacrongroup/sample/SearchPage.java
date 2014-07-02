@@ -5,14 +5,11 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 public class SearchPage extends PageObject {
-
-    private By searchButton = By.id("gbqfba");
-    private By searchField = By.id("gbqfq");
+    private By searchField = By.name("q");
 
     public SearchPage(WebDriver driver) {
         super(driver);
     }
-
 
     public SearchResultsPage submitSearch(String searchTerm) {
         clearSearchField();
@@ -24,5 +21,4 @@ public class SearchPage extends PageObject {
     private void clearSearchField() {
         driver.findElement(searchField).clear();
     }
-
 }
