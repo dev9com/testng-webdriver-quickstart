@@ -1,7 +1,7 @@
-package com.dynacrongroup.sample.local;
+package com.dev9.sample.local;
 
-import com.dynacrongroup.webtest.annotation.MethodDriver;
-import com.dynacrongroup.webtest.listeners.SeleniumWebDriver;
+import com.dev9.webtest.annotation.MethodDriver;
+import com.dev9.webtest.listeners.SeleniumWebDriver;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;

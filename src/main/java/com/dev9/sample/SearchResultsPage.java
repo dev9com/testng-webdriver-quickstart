@@ -1,4 +1,4 @@
-package com.dynacrongroup.sample;
+package com.dev9.sample;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
