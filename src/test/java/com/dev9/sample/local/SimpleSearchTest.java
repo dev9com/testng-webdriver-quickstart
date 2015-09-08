@@ -1,29 +1,23 @@
 package com.dev9.sample.local;
 
 
+import com.dev9.annotation.MethodDriver;
+import com.dev9.listener.SeleniumWebDriver;
 import com.dev9.sample.SearchPage;
 import com.dev9.sample.SearchResultsPage;
-import com.dev9.webtest.annotation.MethodDriver;
-import com.dev9.webtest.listeners.SeleniumWebDriver;
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static org.fest.assertions.api.Assertions.assertThat;
-
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Test
 @Listeners({SeleniumWebDriver.class})
 public class SimpleSearchTest {
-    private final static Logger log = LoggerFactory.getLogger(SimpleSearchTest.class);
 
-    private String SEARCH_TERM = "Selenium Page Objects";
-    private String SEARCH_RESULTS_EXPECTED = "code.google.com/p/selenium/wiki/PageObjects";
-    private List<String> SEARCH_RESULTS_FOUND;
+    private List<String> results;
 
     // By specifying an excluded method the methodDriver variable will NOT be initialized for the listed methods.
     // This can be tested in the excluded method by the following assert: assertThat(methodDriver).isNull();
@@ -37,13 +31,12 @@ public class SimpleSearchTest {
     public void testSimpleSearch() {
         methodDriver.get(search);
         SearchPage searchPage = new SearchPage(methodDriver);
-        SearchResultsPage searchResultsPage = searchPage.submitSearch(SEARCH_TERM);
+        SearchResultsPage searchResultsPage = searchPage.submitSearch("Selenium Page Objects");
 
-        SEARCH_RESULTS_FOUND = searchResultsPage.getSearchResults();
+        results = searchResultsPage.getSearchResults();
 
-        assertThat(SEARCH_RESULTS_FOUND).isNotNull();
-        log.info("Results displayed: " + SEARCH_RESULTS_FOUND.size());
-        assertThat(SEARCH_RESULTS_FOUND.size()).isGreaterThan(0);
+        assertThat(results).isNotNull();
+        assertThat(results.size()).isGreaterThan(0);
     }
 
     // This test is to display the ability to disable the WebDriver for a test method.
@@ -51,6 +44,6 @@ public class SimpleSearchTest {
     @Test(dependsOnMethods = {"testSimpleSearch"})
     public void testNoWebDriverAssert() {
         assertThat(methodDriver).isNull();
-        assertThat(SEARCH_RESULTS_FOUND).contains(SEARCH_RESULTS_EXPECTED);
+        assertThat(results).contains("https://code.google.com/p/selenium/wiki/PageObjects");
     }
 }

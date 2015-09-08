@@ -5,4 +5,4 @@ using different browser types and combinations.
 
 
 For additional details regarding the testng-webdriver, the library that provides the WebDriverBase used by the tests:
-https://github.com/dev9com/testng-webdriver
+https://github.com/dev9com/test-webdrivers

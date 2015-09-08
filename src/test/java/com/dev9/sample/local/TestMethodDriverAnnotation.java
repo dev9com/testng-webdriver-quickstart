@@ -1,38 +1,43 @@
 package com.dev9.sample.local;
 
-import com.dev9.webtest.annotation.MethodDriver;
-import com.dev9.webtest.listeners.SeleniumWebDriver;
+import com.dev9.annotation.MethodDriver;
+import com.dev9.listener.SeleniumWebDriver;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Test
 @Listeners({SeleniumWebDriver.class})
 public class TestMethodDriverAnnotation {
 
 
-    @MethodDriver
+    @MethodDriver(excludeMethods = {"testExcluded"})
     public WebDriver methodDriver;
 
     public String search = "https://www.google.com/";
 
-    public String maps = "https://maps.google.com/";
+    public String maps = "https://www.google.com/maps";
 
     public String news = "https://news.google.com/";
 
-    public void testMethod1() {
+    public void testGoogleSearch() {
         methodDriver.get(search);
-        Assert.assertTrue(methodDriver.getCurrentUrl().equals(search));
+        assertThat(methodDriver.getCurrentUrl()).isEqualTo(search);
     }
 
-    public void testMethod2() {
+    public void testGoogleMaps() {
         methodDriver.get(maps);
-        Assert.assertTrue(methodDriver.getCurrentUrl().equals(maps));
+        assertThat(methodDriver.getCurrentUrl()).startsWith(maps);
     }
 
-    public void testMethod3() {
+    public void testGoogleNews() {
         methodDriver.get(news);
-        Assert.assertTrue(methodDriver.getCurrentUrl().equals(news));
+        assertThat(methodDriver.getCurrentUrl()).isEqualTo(news);
+    }
+
+    public void testExcluded() {
+        assertThat(methodDriver).isNull();
     }
 }

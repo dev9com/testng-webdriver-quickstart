@@ -9,28 +9,20 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <fest-assert-core.version>2.0M8</fest-assert-core.version>
+        <testng-webdriver.version>1.4</testng-webdriver.version>
+        <assertj.version>3.1.0</assertj.version>
     </properties>
-
-
-    <repositories>
-        <repository>
-            <id>cloudbees</id>
-            <url>https://repository-dev9.forge.cloudbees.com/release/</url>
-        </repository>
-    </repositories>
-
 
     <dependencies>
         <dependency>
             <groupId>com.dev9</groupId>
             <artifactId>testng-webdriver</artifactId>
-            <version>2.15</version>
+            <version>${testng-webdriver.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.easytesting</groupId>
-            <artifactId>fest-assert-core</artifactId>
-            <version>${fest-assert-core.version}</version>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
         </dependency>
     </dependencies>
 
